@@ -67,10 +67,39 @@ font-size:22px;
 </head>
 
 <body>
-
-<audio controls autoplay loop>
+<!-- MUSIC -->
+<audio id="bgmusic" loop>
   <source src="mysong.mp3" type="audio/mpeg">
 </audio>
+
+<!-- BUTTON -->
+<button onclick="startStory()" style="
+  padding:15px 30px;
+  font-size:18px;
+  border-radius:25px;
+  background:pink;
+  border:none;
+  cursor:pointer;">
+  Start Our Story ❤️
+</button>
+
+<!-- SCRIPT -->
+<script>
+function startStory() {
+
+  // play music
+  document.getElementById("bgmusic").play();
+
+  // go to next section or show message
+  alert("Our beautiful story begins now ❤️");
+
+  // OR scroll down
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth"
+  });
+}
+</script>
 
 <!-- INTRO -->
 <div class="screen active" id="start">
