@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title> Abbayi garu tho Journey ❤️</title>
+<title>Abbayi garu tho Journey ❤️</title>
 
 <style>
 body{
@@ -26,14 +26,13 @@ padding:30px;
 .active{display:flex;}
 
 button{
-padding:12px 30px;
+padding:14px 30px;
 border:none;
 border-radius:30px;
 background:#ff4b7d;
 color:white;
 font-size:18px;
 cursor:pointer;
-margin-top:20px;
 }
 
 /* full image */
@@ -67,52 +66,22 @@ font-size:22px;
 </head>
 
 <body>
+
 <!-- MUSIC -->
-<audio id="bgmusic" loop>
-  <source src="mysong.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgmusic" src="mysong.mp3" loop></audio>
 
-<!-- BUTTON -->
-<button onclick="startStory()" style="
-  padding:15px 30px;
-  font-size:18px;
-  border-radius:25px;
-  background:pink;
-  border:none;
-  cursor:pointer;">
-  Start Our Story ❤️
-</button>
-
-<!-- SCRIPT -->
-<script>
-function startStory() {
-
-  // play music
-  document.getElementById("bgmusic").play();
-
-  // go to next section or show message
-  alert("Our beautiful story begins now ❤️");
-
-  // OR scroll down
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth"
-  });
-}
-</script>
-
-<!-- INTRO -->
+<!-- INTRO SCREEN -->
 <div class="screen active" id="start">
-<h1>For My Mogudu Garu❤️</h1>
-<button onclick="begin()">Start Our Story</button>
+<h1>For My Mogudu Garu ❤️</h1>
+<button onclick="begin()">Start Our Story ❤️</button>
 </div>
 
-<!-- TEXT SCREEN -->
+<!-- TEXT -->
 <div class="screen" id="textScreen">
 <h2 id="text"></h2>
 </div>
 
-<!-- PHOTO SCREEN -->
+<!-- PHOTO -->
 <div class="screen" id="photoScreen">
 <img id="slide" class="fullimg">
 <div class="overlay"><h2 id="photoText"></h2></div>
@@ -120,7 +89,7 @@ function startStory() {
 
 <!-- GAME -->
 <div class="screen" id="game">
-<h2> Evandoy Naa Heart ni pattukondi❤️</h2>
+<h2>Evandoy Naa Heart ni pattukondi ❤️</h2>
 <button id="heartBtn" onclick="nextLetter()">❤️</button>
 </div>
 
@@ -131,47 +100,48 @@ function startStory() {
 
 <!-- FINAL -->
 <div class="screen" id="final">
-<h1>Happy Valentine’s Day  Abbayi Garu❤️</h1>
-<h2>I Love You Ippatiki,Eppatiki Chachedaka 💍</h2>
+<h1>Happy Valentine’s Day Abbayi Garu ❤️</h1>
+<h2>I Love You Ippatiki, Eppatiki Chachedaka 💍</h2>
 </div>
 
 
 <script>
 
-let music=document.getElementById("music")
+let music=document.getElementById("bgmusic")
 
 function show(id){
 document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"))
 document.getElementById(id).classList.add("active")
 }
 
-/* start */
+/* START */
 function begin(){
 music.play()
-setTimeout(valentineWeek,10000)
+valentineWeek()
 }
 
-/* 8 days (12s each = slow reading) */
+/* VALENTINE WEEK TEXTS */
 let days=[
 "🌹 Rose Day\nIppudepusina Gulabi entha andanga untundoo nii prema naa mida alane undali...",
-"💍 Propose Day\nNaku nuv prathiroju propose chesthav"I LOVE YOU" kottaga propose day em le!...",
-"🍫 Chocolate Day\nEntha tension lo unna nii thiyyanaina matalni vini cool ayyipotha...",
-"🧸 Teddy Day\nNuv Nannu Teddy laa Hug cheskuntunnappudalla na teddy day ney...",
-"🤝 Promise Day\nI promise to never leave you...",
-"🤗 Hug Day\nI Waana Hug you more and more...",
-"😘 Kiss Day\nGallo muddululni egeresedi manesi mii pakkane unna pettandi...",
-"❤️ Valentine’s Day\nFinally… I meet you today..."
+"💍 Propose Day\nNuv prathi roju nannu propose chesthav… naa life lo best gift nuvve...",
+"🍫 Chocolate Day\nNii matalu chocolate kanna sweet...",
+"🧸 Teddy Day\nNuv nannu hug chesinappudu naa prapancham complete...",
+"🤝 Promise Day\nI promise to stay with you forever...",
+"🤗 Hug Day\nI want only your hugs...",
+"😘 Kiss Day\nNii muddu lo na pranam untundi...",
+"❤️ Valentine’s Day\nFinally today I meet you..."
 ]
 
 function valentineWeek(){
 show("textScreen")
+
 let i=0
 
 function next(){
 if(i<days.length){
 text.innerText=days[i]
 i++
-setTimeout(next,15000)
+setTimeout(next,8000)
 }
 else{
 quotes()
@@ -180,14 +150,12 @@ quotes()
 next()
 }
 
-/* romantic quotes section */
+/* QUOTES */
 let loveQuotes=[
-"Nannu baristhunandhuku thank you soo much abbayi garu❤️",
-"Ninnu vadilei okka 2hrs undalenu ninu alantidi vadile prasakthe ledu Understand!",
-"Banglore ee kadu America ka avvanii ninnunaa deggara nunchi dooram cheyyaledu…",
-"Nela thirigesariki nii kosam wait chesthu untaaaaaaa…",
-"LOVE YOU CHOOOO MUCH ABBAYI GARU…",
-
+"Nannu baristhunandhuku thank you abbayi garu ❤️",
+"2 hours kuda ninnu lekunda undalenu...",
+"Distance entha unna manam kalisi untaam...",
+"Nuvve naa world ❤️"
 ]
 
 function quotes(){
@@ -197,7 +165,7 @@ function next(){
 if(i<loveQuotes.length){
 text.innerText=loveQuotes[i]
 i++
-setTimeout(next,18000)
+setTimeout(next,9000)
 }
 else{
 photos()
@@ -206,14 +174,14 @@ photos()
 next()
 }
 
-/* slideshow 2 minutes */
+/* PHOTOS */
 function photos(){
 show("photoScreen")
 
 let pics=["pic1.jpg","pic2.jpg","pic3.jpg"]
 let captions=[
 "Our cutest memory ❤️",
-"Naa Abbayi tho🥰",
+"Naa Abbayi tho 🥰",
 "Forever us 💕"
 ]
 
@@ -222,12 +190,12 @@ setInterval(()=>{
 slide.src=pics[i%3]
 photoText.innerText=captions[i%3]
 i++
-},6000)
+},5000)
 
-setTimeout(gameStart,120000)
+setTimeout(gameStart,60000)
 }
 
-/* game 1 minute */
+/* GAME */
 function gameStart(){
 show("game")
 
@@ -235,24 +203,24 @@ setInterval(()=>{
 heartBtn.style.position="absolute"
 heartBtn.style.left=Math.random()*80+"vw"
 heartBtn.style.top=Math.random()*80+"vh"
-},600)
+},500)
 }
 
-/* letter typing effect */
+/* LETTER */
 function nextLetter(){
 show("letter")
 
-let message="Even though we were far apart...\nI celebrated every single day thinking of you...\nI coded all this just to see your smile...\nYou are my forever person...\nI LOVE YOU ❤️"
+let msg="Even though we were far apart...\nI celebrated every day thinking of you...\nI coded all this only for you...\nYou are my forever...\nI LOVE YOU ❤️"
 
 let i=0
 function type(){
-if(i<message.length){
-letterText.innerHTML+=message[i]=="\n"?"<br>":message[i]
+if(i<msg.length){
+letterText.innerHTML+=msg[i]=="\n"?"<br>":msg[i]
 i++
-setTimeout(type,70)
+setTimeout(type,60)
 }
 else{
-setTimeout(()=>show("final"),60000)
+setTimeout(()=>show("final"),15000)
 }
 }
 type()
@@ -272,4 +240,3 @@ setTimeout(()=>h.remove(),7000)
 
 </body>
 </html>
-
