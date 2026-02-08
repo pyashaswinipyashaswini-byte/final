@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Abbayi garu tho Journey ❤️</title>
+
+<style>
+body{
+margin:0;
+background:black;
+color:white;
+font-family:Segoe UI, cursive;
+overflow:hidden;
+text-align:center;
+}
+
+.screen{
+display:none;
+height:100vh;
+width:100vw;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:30px;
+}
+
+.active{display:flex;}
+
+button{
+padding:12px 30px;
+border:none;
+border-radius:30px;
+background:#ff4b7d;
+color:white;
+font-size:18px;
+cursor:pointer;
+margin-top:20px;
+}
+
+/* full image */
+.fullimg{
+position:absolute;
+width:100vw;
+height:100vh;
+object-fit:cover;
+}
+
+/* overlay */
+.overlay{
+position:absolute;
+background:rgba(0,0,0,0.5);
+padding:25px;
+border-radius:20px;
+}
+
+/* hearts */
+.heart{
+position:absolute;
+animation:float 7s linear infinite;
+font-size:22px;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-10vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop controls>
+<source src="mysong.mp3" type="audio/mpeg">
+</audio>
+
+<!-- INTRO -->
+<div class="screen active" id="start">
+<h1>For My Mogudu Garu❤️</h1>
+<button onclick="begin()">Start Our Story</button>
+</div>
+
+<!-- TEXT SCREEN -->
+<div class="screen" id="textScreen">
+<h2 id="text"></h2>
+</div>
+
+<!-- PHOTO SCREEN -->
+<div class="screen" id="photoScreen">
+<img id="slide" class="fullimg">
+<div class="overlay"><h2 id="photoText"></h2></div>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="game">
+<h2> Evandoy Naa Heart ni pattukondi❤️</h2>
+<button id="heartBtn" onclick="nextLetter()">❤️</button>
+</div>
+
+<!-- LETTER -->
+<div class="screen" id="letter">
+<h2 id="letterText"></h2>
+</div>
+
+<!-- FINAL -->
+<div class="screen" id="final">
+<h1>Happy Valentine’s Day  Abbayi Garu❤️</h1>
+<h2>I Love You Ippatiki,Eppatiki Chachedaka 💍</h2>
+</div>
+
+
+<script>
+
+let music=document.getElementById("music")
+
+function show(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"))
+document.getElementById(id).classList.add("active")
+}
+
+/* start */
+function begin(){
+music.play()
+setTimeout(valentineWeek,10000)
+}
+
+/* 8 days (12s each = slow reading) */
+let days=[
+"🌹 Rose Day\nIppudepusina Gulabi entha andanga untundoo nii prema naa mida alane undali...",
+"💍 Propose Day\nNaku nuv prathiroju propose chesthav"I LOVE YOU" kottaga propose day em le!...",
+"🍫 Chocolate Day\nEntha tension lo unna nii thiyyanaina matalni vini cool ayyipotha...",
+"🧸 Teddy Day\nNuv Nannu Teddy laa Hug cheskuntunnappudalla na teddy day ney...",
+"🤝 Promise Day\nI promise to never leave you...",
+"🤗 Hug Day\nI Waana Hug you more and more...",
+"😘 Kiss Day\nGallo muddululni egeresedi manesi mii pakkane unna pettandi...",
+"❤️ Valentine’s Day\nFinally… I meet you today..."
+]
+
+function valentineWeek(){
+show("textScreen")
+let i=0
+
+function next(){
+if(i<days.length){
+text.innerText=days[i]
+i++
+setTimeout(next,15000)
+}
+else{
+quotes()
+}
+}
+next()
+}
+
+/* romantic quotes section */
+let loveQuotes=[
+"Nannu baristhunandhuku thank you soo much abbayi garu❤️",
+"Ninnu vadilei okka 2hrs undalenu ninu alantidi vadile prasakthe ledu Understand!",
+"Banglore ee kadu America ka avvanii ninnunaa deggara nunchi dooram cheyyaledu…",
+"Nela thirigesariki nii kosam wait chesthu untaaaaaaa…",
+"LOVE YOU CHOOOO MUCH ABBAYI GARU…",
+
+]
+
+function quotes(){
+let i=0
+
+function next(){
+if(i<loveQuotes.length){
+text.innerText=loveQuotes[i]
+i++
+setTimeout(next,18000)
+}
+else{
+photos()
+}
+}
+next()
+}
+
+/* slideshow 2 minutes */
+function photos(){
+show("photoScreen")
+
+let pics=["pic1.jpg","pic2.jpg","pic3.jpg"]
+let captions=[
+"Our cutest memory ❤️",
+"Naa Abbayi tho🥰",
+"Forever us 💕"
+]
+
+let i=0
+setInterval(()=>{
+slide.src=pics[i%3]
+photoText.innerText=captions[i%3]
+i++
+},6000)
+
+setTimeout(gameStart,120000)
+}
+
+/* game 1 minute */
+function gameStart(){
+show("game")
+
+setInterval(()=>{
+heartBtn.style.position="absolute"
+heartBtn.style.left=Math.random()*80+"vw"
+heartBtn.style.top=Math.random()*80+"vh"
+},600)
+}
+
+/* letter typing effect */
+function nextLetter(){
+show("letter")
+
+let message="Even though we were far apart...\nI celebrated every single day thinking of you...\nI coded all this just to see your smile...\nYou are my forever person...\nI LOVE YOU ❤️"
+
+let i=0
+function type(){
+if(i<message.length){
+letterText.innerHTML+=message[i]=="\n"?"<br>":message[i]
+i++
+setTimeout(type,70)
+}
+else{
+setTimeout(()=>show("final"),60000)
+}
+}
+type()
+}
+
+/* floating hearts */
+setInterval(()=>{
+let h=document.createElement("div")
+h.className="heart"
+h.innerHTML="❤️"
+h.style.left=Math.random()*100+"vw"
+document.body.appendChild(h)
+setTimeout(()=>h.remove(),7000)
+},300)
+
+</script>
+
+</body>
+</html>
+
