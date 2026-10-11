@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LabSecure | Access Control</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">▥</div>
+      <div><strong>LabSecure</strong><small>ACCESS CONTROL</small></div>
+    </div>
+
+    <p class="nav-label">WORKSPACE</p>
+    <nav>
+      <a href="#overview" class="nav-item active">⌂ <span>Overview</span></a>
+      <a href="#researchers" class="nav-item">♙ <span>Researchers</span></a>
+      <a href="#requests" class="nav-item">⇄ <span>Access requests</span><b id="queueBadge">0</b></a>
+      <a href="#hashing" class="nav-item"># <span>Hash table</span></a>
+      <a href="#zones" class="nav-item">⑂ <span>Lab hierarchy</span></a>
+      <a href="#activity" class="nav-item">◷ <span>Activity log</span></a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <span class="online-dot"></span> Simulation environment
+      <p>Data Structures Project</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>Workspace <span class="slash">/</span> Overview</div>
+      <div class="top-right"><span>ACCESS MANAGEMENT</span><div class="avatar">LA</div></div>
+    </div>
+
+    <section id="overview" class="page-heading">
+      <div>
+        <p class="eyebrow">BIOMEDICAL RESEARCH FACILITY</p>
+        <h1>Access overview</h1>
+        <p>Manage researcher records, verify entry requests, and review security activity in one place.</p>
+      </div>
+      <div class="ready"><span class="online-dot"></span> System ready</div>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card">
+        <div class="stat-top"><span>Total researchers</span><span class="stat-icon purple">♙</span></div>
+        <h2 id="totalResearchers">5</h2><small>Registered profiles</small>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Pending requests</span><span class="stat-icon orange">⇄</span></div>
+        <h2 id="pendingRequests">0</h2><small>Awaiting verification</small>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Approved today</span><span class="stat-icon green">✓</span></div>
+        <h2 id="approvedToday">0</h2><small>In this session</small>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Security actions</span><span class="stat-icon blue">⌁</span></div>
+        <h2 id="actionCount">0</h2><small>Recorded events</small>
+      </article>
+    </section>
+
+    <div class="dashboard-grid">
+      <section class="panel" id="researchers">
+        <div class="panel-heading">
+          <div><h2>Researcher directory</h2><p>Registered personnel and access permissions</p></div>
+          <button class="text-button" id="showAdd">＋ Add new</button>
+        </div>
+
+        <form id="addForm" class="add-form hidden">
+          <input id="newId" placeholder="Researcher ID (e.g. R-106)" required>
+          <input id="newName" placeholder="Full name" required>
+          <select id="newZone">
+            <option>Genomics</option><option>Wet Lab</option>
+            <option>Cold Storage</option><option>Biosecurity</option>
+          </select>
+          <button class="primary" type="submit">Save researcher</button>
+          <button class="soft" id="cancelAdd" type="button">Cancel</button>
+        </form>
+
+        <div class="toolbar">
+          <input id="searchInput" placeholder="⌕  Search name or researcher ID...">
+          <select id="statusFilter">
+            <option value="all">All statuses</option>
+            <option value="Active">Active</option>
+            <option value="Revoked">Revoked</option>
+          </select>
+          <select id="sortBy">
+            <option value="id">Sort: ID</option>
+            <option value="name">Sort: Name</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>RESEARCHER</th><th>ID</th><th>AUTHORIZED AREA</th><th>STATUS</th><th></th></tr></thead>
+            <tbody id="researcherRows"></tbody>
+          </table>
+        </div>
+        <p id="directoryMessage" class="helper">Search uses the hash table for exact ID lookup.</p>
+      </section>
+
+      <section class="panel" id="requests">
+        <div class="panel-heading">
+          <div><h2>Access requests</h2><p>Requests are processed in arrival order</p></div>
+          <span class="pill" id="queueCount">0 pending</span>
+        </div>
+        <form id="requestForm">
+          <label>Researcher</label>
+          <select id="requester"></select>
+          <label>Requested area</label>
+          <select id="requestedZone">
+            <option>Genomics</option><option>Wet Lab</option>
+            <option>Cold Storage</option><option>Biosecurity</option>
+          </select>
+          <button class="primary full" type="submit">＋ Submit access request</button>
+        </form>
+        <div class="section-divider"></div>
+        <div class="subheading"><strong>Waiting queue</strong><span>FIFO order</span></div>
+        <div id="queueList" class="queue-list"></div>
+        <button class="primary full" id="processNext">Process next request</button>
+        <p class="helper">First In, First Out: the oldest request is checked first.</p>
+      </section>
+    </div>
+
+    <section class="panel" id="hashing">
+      <div class="panel-heading">
+        <div><h2>Hash table visualizer</h2><p>Researcher ID → hash function → bucket → matching record</p></div>
+        <span class="pill">Separate chaining</span>
+      </div>
+      <div class="hash-controls">
+        <input id="hashSearch" placeholder="Enter exact ID (e.g. R-104)">
+        <button class="primary" id="findHash">Find by hash</button>
+        <button class="soft" id="showBuckets">Show all buckets</button>
+      </div>
+      <div id="hashResult" class="hash-result">Select “Find by hash” to inspect a researcher lookup.</div>
+      <div id="hashBuckets" class="hash-buckets"></div>
+      <p class="helper">Bucket collisions are resolved by storing multiple records in a linked chain.</p>
+    </section>
+
+    <div class="dashboard-grid">
+      <section class="panel" id="zones">
+        <div class="panel-heading"><div><h2>Laboratory hierarchy</h2><p>Select a zone to view its parent and child areas.</p></div></div>
+        <div id="zoneTree" class="tree"></div>
+        <div id="zoneInfo" class="zone-info">Choose a zone from the hierarchy.</div>
+      </section>
+
+      <section class="panel" id="stackPanel">
+        <div class="panel-heading"><div><h2>Security action stack</h2><p>Recent actions · Last In, First Out</p></div><span class="pill">LIFO</span></div>
+        <div id="stackList" class="stack-list"></div>
+        <button id="undoAction" class="soft full">Remove latest stack entry</button>
+        <p class="helper">This removes an entry from the demonstration stack, not a real security event or access permission.</p>
+      </section>
+    </div>
+
+    <section class="panel" id="activity">
+      <div class="panel-heading">
+        <div><h2>Activity log</h2><p>Linked-list history of system events</p></div>
+        <button id="exportCsv" class="primary">↓ Export audit CSV</button>
+      </div>
+      <div id="activityList" class="activity-list"></div>
+      <p class="helper">The displayed history is maintained as linked nodes. Export downloads the visible simulation's event history.</p>
+    </section>
+
+    <footer>LABSECURE · ACCESS VERIFICATION SYSTEM · ACADEMIC DEMONSTRATION</footer>
+  </main>
+</div>
+<div id="toast" class="toast"></div>
+</body>
+</html>
